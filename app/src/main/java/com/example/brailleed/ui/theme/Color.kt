@@ -10,5 +10,5 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
-val RightChoose = Color(0xFF2BBE04)
-val WrongChoose = Color(0xFFFF0000)
+val RightChoose = Color(0xFF33A216)
+val WrongChoose = Color(0xFFC22020)

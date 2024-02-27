@@ -13,21 +13,23 @@ class TrainerUseCase {
         }
         return randomChars
     }
+
     fun getRandomChoosingChars(): TrainerChoosingEntity {
-            var entity = initTrainerChoosingEntity()
-            while (entity.wrongs.any { c -> c == entity.right }) {
-                entity = initTrainerChoosingEntity()
-            }
+        var entity = initTrainerChoosingEntity()
+        while (entity.wrongs.any { c -> c == entity.right }) {
+            entity = initTrainerChoosingEntity()
+        }
 
         return entity
     }
 
     //todo обязательно оптимизировать !!!!!! так как райт не записывается в общее
+//    todo еще и могут повторяться неправильные варианты
     private fun initTrainerChoosingEntity(): TrainerChoosingEntity {
-        return  with(brailleRepository){
+        return with(brailleRepository) {
             TrainerChoosingEntity(
                 right = getRandomChar(),
-                wrongs = listOf(getRandomChar(),getRandomChar(),getRandomChar())
+                wrongs = listOf(getRandomChar(), getRandomChar(), getRandomChar())
             )
         }
     }

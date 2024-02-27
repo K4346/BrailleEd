@@ -7,4 +7,5 @@
     <string name="English">Английский</string>
     <string name="Numbers_and_signs">Цифры и знаки</string>
     <string name="BrailleAlphabet">Азбука Брайля</string>
+    <string name="selected_language">Словарь: %1$s</string>
 </resources>
