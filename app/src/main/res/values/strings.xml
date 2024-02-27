@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">BrailleEd</string>
+    <string name="next">Далее</string>
+    <string name="finish">Завершить</string>
+    <string name="Braille_simulator">Тренажер шрифта Брайля</string>
+    <string name="Russian">Русский</string>
+    <string name="English">Английский</string>
+    <string name="Numbers_and_signs">Цифры и знаки</string>
+    <string name="BrailleAlphabet">Азбука Брайля</string>
+</resources>
