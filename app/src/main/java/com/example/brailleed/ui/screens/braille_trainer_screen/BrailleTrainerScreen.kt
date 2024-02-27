@@ -18,13 +18,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.brailleed.R
 import com.example.brailleed.domain.use_cases.TrainerUseCase
 import com.example.brailleed.ui.composable.BrailleView
 import com.example.brailleed.ui.composable.ChooseCharButton
+import com.example.brailleed.ui.theme.fontRobotoFamily
 
 val trainerUseCase = TrainerUseCase()
 
@@ -37,11 +40,12 @@ fun BrailleTrainerScreen(
 
     val currentChar by remember { vm.currentChar }
 
-    var selectedChar by remember { vm.selectedChar}
+    var selectedChar by remember { vm.selectedChar }
 
     var answered by remember { vm.answered }
 
 
+//    todo сделать скролл
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -54,7 +58,9 @@ fun BrailleTrainerScreen(
             "${vm.rightCount}/${vm.allCount}",
             Modifier
                 .padding(8.dp)
-                .align(Alignment.End)
+                .align(Alignment.End),
+            fontWeight = FontWeight.Bold,
+            fontFamily = fontRobotoFamily
         )
 
         BrailleView(letter = currentChar.right)
@@ -86,7 +92,12 @@ fun BrailleTrainerScreen(
             modifier = Modifier
                 .padding(8.dp)
         ) {
-            Text(text = stringResource(R.string.next))
+            Text(
+                text = stringResource(R.string.next),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Light,
+                fontFamily = fontRobotoFamily
+            )
         }
 
         Button(
@@ -96,7 +107,12 @@ fun BrailleTrainerScreen(
             modifier = Modifier
                 .padding(20.dp)
         ) {
-            Text(text = stringResource(R.string.finish))
+            Text(
+                text = stringResource(R.string.finish),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Light,
+                fontFamily = fontRobotoFamily
+            )
         }
     }
 }
