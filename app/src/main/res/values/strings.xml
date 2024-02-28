@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">BrailleEd</string>
-    <string name="next">Далее</string>
-    <string name="finish">Завершить</string>
-    <string name="Braille_simulator">Тренажер шрифта Брайля</string>
-    <string name="Russian">Русский</string>
-    <string name="English">Английский</string>
-    <string name="Numbers_and_signs">Цифры и знаки</string>
-    <string name="BrailleAlphabet">Азбука Брайля</string>
-    <string name="selected_language">Словарь: %1$s</string>
+    <string name="app_name" translatable="false">BrailleEd</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
+    <string name="Braille_simulator">Braille training simulator</string>
+    <string name="Russian">Russian</string>
+    <string name="English">English</string>
+    <string name="Numbers_and_signs">Numbers and signs</string>
+    <string name="BrailleAlphabet">Braille Alphabet</string>
+    <string name="selected_language">Dictionary: %1$s</string>
     <string name="back">Back</string>
 </resources>

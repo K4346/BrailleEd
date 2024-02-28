@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="next">Әрі қарай</string>
+    <string name="finish">Аяқтау</string>
+    <string name="Braille_simulator">Брайль шрифті тренажері</string>
+    <string name="Russian">Орыс</string>
+    <string name="English">Ағылшын</string>
+    <string name="Numbers_and_signs">Сандар мен белгілер</string>
+    <string name="BrailleAlphabet">Брайль әліпбиі</string>
+    <string name="selected_language">Сөздік: %1$s</string>
+    <string name="back">артқа</string>
+</resources>

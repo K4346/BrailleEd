@@ -10,8 +10,10 @@ interface BrailleRepository {
 
     fun getAlphabet(resId: Int): Set<Char>
 
-    fun getRandomChar(): Char
 
+    fun getRightChar(): Char
+
+    fun getWrongChars(right: Char):List<Char>
     fun changeCurrentDict(@StringRes langResId: Int)
 
     fun getCurrentDict(): Dicts

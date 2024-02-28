@@ -6,14 +6,6 @@ import com.example.brailleed.domain.repositories.BrailleRepository
 class TrainerUseCase {
     val brailleRepository: BrailleRepository = BrailleRepositoryImpl
 
-    fun getRandomChars(count: Int): ArrayList<TrainerChoosingEntity> {
-        val randomChars = arrayListOf<TrainerChoosingEntity>()
-        (1..count).forEach {
-            randomChars.add(getRandomChoosingChars())
-        }
-        return randomChars
-    }
-
     fun getRandomChoosingChars(): TrainerChoosingEntity {
         var entity = initTrainerChoosingEntity()
         while (entity.wrongs.any { c -> c == entity.right }) {
@@ -23,13 +15,12 @@ class TrainerUseCase {
         return entity
     }
 
-    //todo обязательно оптимизировать !!!!!! так как райт не записывается в общее
-//    todo еще и могут повторяться неправильные варианты
     private fun initTrainerChoosingEntity(): TrainerChoosingEntity {
         return with(brailleRepository) {
+            val right = getRightChar()
             TrainerChoosingEntity(
-                right = getRandomChar(),
-                wrongs = listOf(getRandomChar(), getRandomChar(), getRandomChar())
+                right = right,
+                wrongs = getWrongChars(right)
             )
         }
     }

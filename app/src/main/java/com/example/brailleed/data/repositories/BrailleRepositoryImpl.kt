@@ -6,7 +6,7 @@ import com.example.brailleed.domain.repositories.BrailleRepository
 
 
 object BrailleRepositoryImpl : BrailleRepository {
-    //    todo переделать, добавить русский (проверить)
+
     private val brailleEnDict = mapOf(
         'a' to listOf(true, false, false, false, false, false),
         'b' to listOf(true, false, true, false, false, false),
@@ -96,6 +96,8 @@ object BrailleRepositoryImpl : BrailleRepository {
         Dicts.NM to brailleNumbersDict,
     )
 
+    private var streamOfChars = mutableListOf<Char>()
+
     //    todo передалть, мб добавить sharedpref и или язык по умолчанию
     private var currentDict: Dicts = Dicts.RU
 
@@ -103,6 +105,7 @@ object BrailleRepositoryImpl : BrailleRepository {
 
     override fun changeCurrentDict(@StringRes langResId: Int) {
         currentDict = Dicts.values().find { it.langResId == langResId } ?: Dicts.EN
+        initStreamOfChars()
     }
 
     override fun getBrailleChar(char: Char): List<Boolean> {
@@ -114,7 +117,40 @@ object BrailleRepositoryImpl : BrailleRepository {
         return brailleDict[dict]?.get(char) ?: error("Character not supported: $char")
     }
 
-    override fun getRandomChar(): Char {
+    private fun initStreamOfChars() {
+        val count = brailleDict[currentDict]!!.count()
+        val stream = brailleDict[currentDict]!!.keys.toMutableList()
+
+        repeat(count * (1.7).toInt()) {
+            stream.add(getRandomChar())
+        }
+        streamOfChars = stream
+    }
+
+    override fun getRightChar(): Char {
+        if (streamOfChars.isEmpty()) {
+            initStreamOfChars()
+        }
+
+        val char = streamOfChars.last()
+        streamOfChars.removeLast()
+        return char
+    }
+
+    override fun getWrongChars(right: Char): List<Char> {
+        val count = brailleDict[currentDict]!!.count()
+        val wrongs = mutableListOf<Char>()
+        val chars = brailleDict[currentDict]!!.keys.toMutableList()
+        while (wrongs.size != WRONG_ANSWERS_COUNT) {
+            val i = (0 until count).random()
+            if (!wrongs.contains(chars[i]) && chars[i]!=right) {
+                wrongs.add(chars[i])
+            }
+        }
+        return wrongs
+    }
+
+    private fun getRandomChar(): Char {
         val randomEntry = brailleDict[currentDict]!!.keys.random()
         return randomEntry
     }
@@ -124,10 +160,12 @@ object BrailleRepositoryImpl : BrailleRepository {
         val dict = Dicts.values().find { it.langResId == resId } ?: Dicts.EN
         return brailleDict[dict]!!.keys
     }
+
+    private const val WRONG_ANSWERS_COUNT = 3
 }
 
 enum class Dicts(@StringRes val langResId: Int) {
-    RU(R.string.Russian),
+    NM(R.string.Numbers_and_signs),
     EN(R.string.English),
-    NM(R.string.Numbers_and_signs)
+    RU(R.string.Russian),
 }
