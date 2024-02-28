@@ -2,13 +2,14 @@ package com.example.brailleed.ui.screens.braille_trainer_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -72,6 +73,7 @@ fun BrailleTrainerScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
+                .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
                 .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -89,23 +91,58 @@ fun BrailleTrainerScreen(
             BrailleView(letter = currentChar.right)
             Spacer(modifier = Modifier.height(16.dp))
 
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2)
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                vm.choosingOptions.forEach { char ->
-                    item {
-                        ChooseCharButton(
-                            onClick = {
-                                answered = true
-                                selectedChar = char
-                            },
-                            char = char,
-                            rightAnswer = currentChar.right,
-                            answered = answered
-                        )
-                    }
-                }
+                ChooseCharButton(
+                    onClick = {
+                        answered = true
+                        selectedChar = vm.choosingOptions[0]
+                    },
+                    char = vm.choosingOptions[0],
+                    rightAnswer = currentChar.right,
+                    answered = answered,
+                    modifier = Modifier.weight(1f)
+                )
+                ChooseCharButton(
+                    onClick = {
+                        answered = true
+                        selectedChar = vm.choosingOptions[1]
+                    },
+                    char = vm.choosingOptions[1],
+                    rightAnswer = currentChar.right,
+                    answered = answered,
+                    modifier = Modifier.weight(1f)
+                )
             }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                ChooseCharButton(
+                    onClick = {
+                        answered = true
+                        selectedChar = vm.choosingOptions[2]
+                    },
+                    char = vm.choosingOptions[2],
+                    rightAnswer = currentChar.right,
+                    answered = answered,
+                    modifier = Modifier.weight(1f)
+                )
+                ChooseCharButton(
+                    onClick = {
+                        answered = true
+                        selectedChar = vm.choosingOptions[3]
+                    },
+                    char = vm.choosingOptions[3],
+                    rightAnswer = currentChar.right,
+                    answered = answered,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+
             Button(
                 enabled = answered,
                 onClick = {
