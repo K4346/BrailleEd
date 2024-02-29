@@ -24,9 +24,8 @@ fun BrailleView(dictId: Int? = null, letter: Char, sizeView:Int=200) {
         val diameter = radius * 2
         val centerY = 0f
         val startX = 0f
-        //todo
+        //todo пересмотреть
         val gap = size.width / 10
-//        todo изменить паддинг чтоб скорректировать
         val padding = -(startX + diameter + gap) / 2
 
         // Левая верхняя точка

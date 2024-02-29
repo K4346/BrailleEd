@@ -30,11 +30,8 @@ import com.example.brailleed.ui.theme.fontRobotoFamily
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    //vm: BrailleTrainerViewModel = viewModel(),
     navHostController: NavHostController
 ) {
-
-//    todo возможно убрать в вьюмодель
 
     val selectedLanguage =
         remember { mutableStateOf(brailleRepository.getCurrentDict().langResId) } // Язык шрифта Брайля

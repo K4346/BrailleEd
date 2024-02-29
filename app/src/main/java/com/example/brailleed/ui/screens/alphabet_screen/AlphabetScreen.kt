@@ -88,7 +88,6 @@ fun AlphabetScreen(
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 BrailleView(selectedLanguageId.intValue, letter = char, 100)
-//                            todo добавить стили - шрифт и размер
                                 Text(
                                     text = char.toString(),
                                     fontSize = 20.sp,

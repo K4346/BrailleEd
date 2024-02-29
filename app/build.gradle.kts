@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("E:\\androd_key.jks")
+            storePassword = "iBEh3Wg3e3hXHwEuA1Zm"
+            keyAlias = "K4346 Production"
+            keyPassword = "XNNNBk6qQNeFgRoyTv3y"
+        }
+    }
     namespace = "com.example.brailleed"
     compileSdk = 34
 
@@ -22,11 +30,17 @@ android {
 
     buildTypes {
         release {
+            isDebuggable=false
             isMinifyEnabled = false
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
+        }
+        debug {
+            isDebuggable=true
         }
     }
     compileOptions {

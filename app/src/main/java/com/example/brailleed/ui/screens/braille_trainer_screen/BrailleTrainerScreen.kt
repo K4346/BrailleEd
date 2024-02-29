@@ -39,7 +39,6 @@ import com.example.brailleed.ui.theme.fontRobotoFamily
 
 val trainerUseCase = TrainerUseCase()
 
-//todo сделать скролл
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BrailleTrainerScreen(
@@ -68,7 +67,6 @@ fun BrailleTrainerScreen(
                 })
         }
     ) { contentPadding ->
-//    todo сделать скролл
         Column(
             modifier = Modifier
                 .fillMaxWidth()

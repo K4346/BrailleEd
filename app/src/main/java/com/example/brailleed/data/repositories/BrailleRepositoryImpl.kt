@@ -1,6 +1,9 @@
 package com.example.brailleed.data.repositories
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.annotation.StringRes
+import androidx.compose.ui.text.intl.Locale
 import com.example.brailleed.R
 import com.example.brailleed.domain.repositories.BrailleRepository
 
@@ -91,35 +94,51 @@ object BrailleRepositoryImpl : BrailleRepository {
         '-' to listOf(false, false, false, false, true, true)
     )
     private val brailleDict = mapOf(
-        Dicts.EN to brailleEnDict,
-        Dicts.RU to brailleRuDict,
-        Dicts.NM to brailleNumbersDict,
+        Dicts.EN.name to brailleEnDict,
+        Dicts.RU.name to brailleRuDict,
+        Dicts.NM.name to brailleNumbersDict,
     )
 
     private var streamOfChars = mutableListOf<Char>()
 
-    //    todo передалть, мб добавить sharedpref и или язык по умолчанию
-    private var currentDict: Dicts = Dicts.RU
+    private lateinit var sharedPreferences: SharedPreferences
+    fun initSharedPreferences(context: Context) {
+        sharedPreferences = context.getSharedPreferences(BRAILLE_ED_STORAGE, Context.MODE_PRIVATE)
+    }
 
-    override fun getCurrentDict() = currentDict
+    private var currentDictCodeName: String
+        get() = sharedPreferences.getString(DEFAULT_LANG_DICT, defaultLangDict())!!
+        set(langDict) {
+            sharedPreferences.edit().putString(DEFAULT_LANG_DICT, langDict).apply()
+        }
+
+    private fun defaultLangDict(): String {
+        val phoneLocale = Locale.current.language.uppercase()
+        if (brailleDict.keys.contains(phoneLocale)) return phoneLocale
+        else return Dicts.RU.name
+    }
+
+    override fun getCurrentDict() = Dicts.valueOf(currentDictCodeName)
 
     override fun changeCurrentDict(@StringRes langResId: Int) {
-        currentDict = Dicts.values().find { it.langResId == langResId } ?: Dicts.EN
+        currentDictCodeName =
+            Dicts.values().find { it.langResId == langResId }?.name ?: Dicts.RU.name
         initStreamOfChars()
     }
 
     override fun getBrailleChar(char: Char): List<Boolean> {
-        return brailleDict[currentDict]?.get(char) ?: error("Character not supported: $char")
+        return brailleDict[currentDictCodeName]?.get(char)
+            ?: error("Character not supported: $char")
     }
 
     override fun getBrailleChar(dictId: Int, char: Char): List<Boolean> {
-        val dict = Dicts.values().find { it.langResId == dictId } ?: Dicts.EN
+        val dict = Dicts.values().find { it.langResId == dictId }?.name ?: Dicts.RU.name
         return brailleDict[dict]?.get(char) ?: error("Character not supported: $char")
     }
 
     private fun initStreamOfChars() {
-        val count = brailleDict[currentDict]!!.count()
-        val stream = brailleDict[currentDict]!!.keys.toMutableList()
+        val count = brailleDict[currentDictCodeName]!!.count()
+        val stream = brailleDict[currentDictCodeName]!!.keys.toMutableList()
 
         repeat(count * (1.7).toInt()) {
             stream.add(getRandomChar())
@@ -138,12 +157,12 @@ object BrailleRepositoryImpl : BrailleRepository {
     }
 
     override fun getWrongChars(right: Char): List<Char> {
-        val count = brailleDict[currentDict]!!.count()
+        val count = brailleDict[currentDictCodeName]!!.count()
         val wrongs = mutableListOf<Char>()
-        val chars = brailleDict[currentDict]!!.keys.toMutableList()
+        val chars = brailleDict[currentDictCodeName]!!.keys.toMutableList()
         while (wrongs.size != WRONG_ANSWERS_COUNT) {
             val i = (0 until count).random()
-            if (!wrongs.contains(chars[i]) && chars[i]!=right) {
+            if (!wrongs.contains(chars[i]) && chars[i] != right) {
                 wrongs.add(chars[i])
             }
         }
@@ -151,18 +170,21 @@ object BrailleRepositoryImpl : BrailleRepository {
     }
 
     private fun getRandomChar(): Char {
-        val randomEntry = brailleDict[currentDict]!!.keys.random()
+        val randomEntry = brailleDict[currentDictCodeName]!!.keys.random()
         return randomEntry
     }
 
     //    todo можно оптимизировать получая сразу все, но нужно ли
     override fun getAlphabet(resId: Int): Set<Char> {
-        val dict = Dicts.values().find { it.langResId == resId } ?: Dicts.EN
+        val dict = Dicts.values().find { it.langResId == resId }?.name ?: Dicts.RU.name
         return brailleDict[dict]!!.keys
     }
 
     private const val WRONG_ANSWERS_COUNT = 3
+    private const val DEFAULT_LANG_DICT = "DEFAULT_LANG_DICT"
+    private const val BRAILLE_ED_STORAGE = "BRAILLE_ED_STORAGE"
 }
+
 
 enum class Dicts(@StringRes val langResId: Int) {
     NM(R.string.Numbers_and_signs),
