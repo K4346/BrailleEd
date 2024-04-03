@@ -9,4 +9,5 @@
     <string name="BrailleAlphabet">Азбука Брайля</string>
     <string name="selected_language">Словарь: %1$s</string>
     <string name="back">Назад</string>
+    <string name="Spanish">Испанский</string>
 </resources>

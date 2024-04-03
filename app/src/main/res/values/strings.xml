@@ -9,4 +9,5 @@
     <string name="BrailleAlphabet">Braille Alphabet</string>
     <string name="selected_language">Dictionary: %1$s</string>
     <string name="back">Back</string>
+    <string name="Spanish">Spanish</string>
 </resources>

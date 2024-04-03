@@ -1,20 +1,20 @@
 package com.example.brailleed.ui.composable
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.brailleed.data.repositories.BrailleRepositoryImpl
 import com.example.brailleed.domain.repositories.BrailleRepository
+import com.example.brailleed.domain.use_cases.TrainerUseCase
 
 //todo ?????
-val brailleRepository: BrailleRepository = BrailleRepositoryImpl
+val brailleRepository: BrailleRepository = TrainerUseCase().brailleRepository
 
 @Composable
-fun BrailleView(dictId: Int? = null, letter: Char, sizeView:Int=200) {
+fun BrailleView(dictId: Int? = null, letter: Char, sizeView: Int = 200) {
 //    если dictId=null то берем из текущего словаря
     val points = if (dictId == null) brailleRepository.getBrailleChar(letter) else
         brailleRepository.getBrailleChar(dictId, letter)

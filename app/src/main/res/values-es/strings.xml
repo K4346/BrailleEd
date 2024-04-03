@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="next">Próxima</string>
+    <string name="finish">Acabado</string>
+    <string name="Braille_simulator">Braille training simulator</string>
+    <string name="Russian">Ruso</string>
+    <string name="English">Inglés</string>
+    <string name="Numbers_and_signs">Números y signos</string>
+    <string name="BrailleAlphabet">Alfabeto Braille</string>
+    <string name="selected_language">Diccionario: %1$s</string>
+    <string name="back">Atrás</string>
+    <string name="Spanish">Español</string>
+</resources>
